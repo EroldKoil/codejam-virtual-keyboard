@@ -54,11 +54,30 @@ function choiceEvent(code) {
 }
 
 function capsLookChange() {
-
+    caps = !caps;
+    refreshKeyBoard(lang, shift);
+    if(caps){
+        document.querySelector('.capsLock').classList.add('selected');
+    }
+    else{
+        document.querySelector('.capsLock').classList.remove('selected');
+    }
 }
 
 function shiftChange(value) {
-
+    let newShiftValue = value == undefined?shiftPress == false?!shift:shift:value;
+    if(shift != newShiftValue){
+        shift = newShiftValue;
+        if(shift){
+            document.getElementById('ShiftLeft').classList.add('selected');
+            document.getElementById('ShiftRight').classList.add('selected');
+        }
+        else{
+            document.getElementById('ShiftLeft').classList.remove('selected');
+            document.getElementById('ShiftRight').classList.remove('selected');
+        }
+        refreshKeyBoard();
+    }
 }
 
 function writeChar(char) {
@@ -75,15 +94,44 @@ function writeChar(char) {
 }
 
 function alt() {
-
+    if(shift) {
+        lang = lang == 'ru' ? 'en' : 'ru';
+        localStorage.setItem('keyboardVirtualLang', lang);
+        refreshKeyBoard();
+    }
 }
 
 function  deleteChar(count) {
-
+    let start = textarea.selectionStart;
+    let end = textarea.selectionEnd;
+    let text = textarea.value.split('');
+    if(start == end) {
+        text.splice(start == 0? 0: start + count, 1, '');
+    }
+    else{
+        text.splice(start == 0? 0: start + count, end - start, '');
+    }
+    let value = '';
+    for(let i = 0; i<text.length; i++){
+        value += text[i];
+    }
+    textarea.value = value;
+    textarea.selectionStart = start == end? start + count: start ;
+    textarea.selectionEnd = textarea.selectionStart;
 }
 
 function controlChange(value){
-
+    let newControlValue = value == undefined?controlPress == false?!ctrl:ctrl:value;
+    if(ctrl != newControlValue) {
+        ctrl = newControlValue;
+        if (ctrl) {
+            document.getElementById('ControlLeft').classList.add('selected');
+            document.getElementById('ControlRight').classList.add('selected');
+        } else {
+            document.getElementById('ControlLeft').classList.remove('selected');
+            document.getElementById('ControlRight').classList.remove('selected');
+        }
+    }
 }
 
 function move(side) {
