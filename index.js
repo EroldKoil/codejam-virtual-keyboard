@@ -140,8 +140,113 @@ function refreshKeyBoard() {
     }
 }
 
+function write(code) {
+    let key = null;
+    for(let i = 0; i < keysArray.length; i++){
+        if(keysArray[i].code == code){
+            key = keysArray[i];
+        }
+    }
+    if(key != null){
+        let start = textarea.selectionStart;
+        let end = textarea.selectionEnd - textarea.selectionStart;
+        let text = textarea.value.split('');
+        let char = shift == true ? lang == 'ru'? key.ruShift :key.enShift:lang == 'ru'?key.ru:key.en;
+        char = caps?char.toUpperCase():char;
+        text.splice( start, end, char );
+
+        let value = '';
+        for(let i = 0; i<text.length; i++){
+            value += text[i];
+        }
+        textarea.value = value;
+        textarea.selectionStart = start + 1;
+        textarea.selectionEnd = textarea.selectionStart;
+    }
+}
 
 
 
 createKeyboard();
+
+document.getElementById('keyboard').addEventListener('mousedown', function(event){
+    let target = event.target;
+    if(target.id != 'keyboard'){
+        if(target.id == ''){
+            target = target.parentElement;
+        }
+        choiceEvent(target.id);
+        target.classList.add('pressMouse');
+
+        document.onmouseup = function() {
+            textarea.focus();
+            target.classList.remove('pressMouse');
+        }
+    }
+});
+
+
+document.addEventListener('keydown' , function (event){
+    event.preventDefault();
+    textarea.focus();
+    let key = document.getElementById(event.code);
+    if (key != null) {
+
+        if (event.code == 'ShiftLeft' || event.code == 'ShiftRight'){
+            if (!shiftPress) {
+                key.classList.add('press');
+                shiftPress = true;
+                shiftChange(true);
+            }
+        }
+        else if (event.code == 'AltLeft' || event.code == 'AltRight'){
+            if (!altPress) {
+                key.classList.add('press');
+                altPress = true;
+                choiceEvent(event.code);
+            }
+        }
+        else if (event.code == 'ControlLeft' || event.code == 'ControlRight'){
+            if (!controlPress) {
+                key.classList.add('press');
+                controlPress = true;
+                controlChange(true);
+            }
+        }
+        else if (event.code == 'CapsLock' ){
+            if (!capsLockPress) {
+                key.classList.add('press');
+                capsLockPress = true;
+                choiceEvent(event.code);
+            }
+        }
+        else{
+            key.classList.add('press');
+            choiceEvent(event.code);
+        }
+
+        document.addEventListener('keyup', function (event) {
+            let key = document.getElementById(event.code);
+            if (key != null) {
+                if (event.code == 'ShiftLeft' || event.code == 'ShiftRight'){
+                    shiftPress = false;
+                    shiftChange(false);
+                }
+                else if (event.code == 'AltLeft' || event.code == 'AltRight'){
+                    altPress = false;
+                }
+                else if (event.code == 'ControlLeft' || event.code == 'ControlRight'){
+                    controlPress = false;
+                    controlChange(false);
+                }
+                else if (event.code == 'CapsLock' ){
+                    capsLockPress = false;
+                }
+
+                key.classList.remove('press');
+            }
+        });
+
+    }
+});
 
