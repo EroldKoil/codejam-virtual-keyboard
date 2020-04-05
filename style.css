@@ -1,0 +1,121 @@
+body{
+    background-color: lavender;
+    width: 800px;
+    margin: 20px auto;
+    align-content: center;
+}
+
+.textArea{
+    height: 10em;
+    width: 48em;
+    resize: none;
+    margin: 0 auto;
+    display: block;
+    font-size: 16px;
+}
+
+.keyboard{
+    background-color: #555079;
+    width: 90%;
+    margin: 50px auto;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.key, .backspace, .tab, .capsLock, .enter, .shift, .alt, .space , .delete, .ctrlRight{
+    display: inline-flex;
+    height: 40px;
+    width: 40px;
+    margin: 4px;
+    background-color: #aac8ff;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.key img{
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.backspace{
+    width: 88px;
+}
+
+.tab{
+    width: 56px;
+}
+
+.capsLock{
+    width: 67px;
+    font-size: 13px;
+}
+
+.delete{
+    width: 61px;
+}
+
+.enter{
+    width: 72px;
+}
+.shift{
+    width: 88px;
+}
+.alt{
+    width: 50px;
+}
+.space{
+    width: 346px;
+}
+.ctrlRight{
+
+}
+
+.rules{
+    font-size: 12px;
+    color: #555079;
+}
+.press{
+    background-color: yellow;
+    animation: pressing 0.5s;
+}
+.pressMouse{
+    animation: pressing 0.5s;
+}
+.selected{
+    background-color: yellow;
+}
+
+.key:hover, .backspace:hover, .tab:hover, .capsLock:hover, .enter:hover, .shift:hover, .alt:hover, .space:hover, .delete:hover, .ctrlRight:hover {
+    opacity:0.7;
+}
+.image{
+    height: 31%;
+}
+
+@keyframes pressing {
+    0%{
+        border-radius: 5px;
+        position: relative;
+        top: 0px;
+    }
+    10%{
+        border-radius: 5px;
+        position: relative;
+        top: 5px;
+    }
+    50%{
+        position: relative;
+        top: 0px;
+    }
+    100%{
+        position: relative;
+        top: 0px;
+    }
+}
